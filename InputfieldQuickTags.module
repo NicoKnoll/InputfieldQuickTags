@@ -16,8 +16,7 @@ class InputfieldQuickTags extends InputfieldTextarea {
 	  return array(
 		  'title' => 'QuickTags',
 		  'version' => 100,
-		  'summary' => 'Adds a toolbar to a textarea with insertable HTML tags.',
-		  'permanent' => true
+		  'summary' => 'Adds a toolbar to a textarea with insertable HTML tags.'
 		  );
      }
 
