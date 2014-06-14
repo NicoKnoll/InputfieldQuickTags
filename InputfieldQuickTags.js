@@ -489,22 +489,22 @@ function edShowButton(which, button, i) {
 	}
 	switch (button.id) {
 		case 'ed_img':
-			document.write('<input type="button" id="' + button.id + '_' + which + '" ' + accesskey + ' class="ed_button ' + button.id + '" onclick="edInsertImage(\'' + which + '\');" value="' + button.display + '" />');
+			return ('<input type="button" id="' + button.id + '_' + which + '" ' + accesskey + ' class="ed_button ' + button.id + '" onclick="edInsertImage(\'' + which + '\');" value="' + button.display + '" />');
 			break;
 		case 'ed_link':
-			document.write('<input type="button" id="' + button.id + '_' + which + '" ' + accesskey + ' class="ed_button ' + button.id + '" onclick="edInsertLink(\'' + which + '\', ' + i + ');" value="' + button.display + '" />');
+			return ('<input type="button" id="' + button.id + '_' + which + '" ' + accesskey + ' class="ed_button ' + button.id + '" onclick="edInsertLink(\'' + which + '\', ' + i + ');" value="' + button.display + '" />');
 			break;
 		case 'ed_ext_link':
-			document.write('<input type="button" id="' + button.id + '_' + which + '" ' + accesskey + ' class="ed_button ' + button.id + '" onclick="edInsertExtLink(\'' + which + '\', ' + i + ');" value="' + button.display + '" />');
+			return ('<input type="button" id="' + button.id + '_' + which + '" ' + accesskey + ' class="ed_button ' + button.id + '" onclick="edInsertExtLink(\'' + which + '\', ' + i + ');" value="' + button.display + '" />');
 			break;
 		case 'ed_footnote':
-			document.write('<input type="button" id="' + button.id + '_' + which + '" ' + accesskey + ' class="ed_button ' + button.id + '" onclick="edInsertFootnote(\'' + which + '\');" value="' + button.display + '" />');
+			return ('<input type="button" id="' + button.id + '_' + which + '" ' + accesskey + ' class="ed_button ' + button.id + '" onclick="edInsertFootnote(\'' + which + '\');" value="' + button.display + '" />');
 			break;
 		case 'ed_via':
-			document.write('<input type="button" id="' + button.id + '_' + which + '" ' + accesskey + ' class="ed_button ' + button.id + '" onclick="edInsertVia(\'' + which + '\');" value="' + button.display + '" />');
+			return ('<input type="button" id="' + button.id + '_' + which + '" ' + accesskey + ' class="ed_button ' + button.id + '" onclick="edInsertVia(\'' + which + '\');" value="' + button.display + '" />');
 			break;
 		default:
-			document.write('<input type="button" id="' + button.id + '_' + which + '" ' + accesskey + ' class="ed_button ' + button.id + '" onclick="edInsertTag(\'' + which + '\', ' + i + ');" value="' + button.display + '"  />');
+			return ('<input type="button" id="' + button.id + '_' + which + '" ' + accesskey + ' class="ed_button ' + button.id + '" onclick="edInsertTag(\'' + which + '\', ' + i + ');" value="' + button.display + '"  />');
 			break;
 	}
 }
@@ -515,7 +515,7 @@ function edShowLinks() {
 		tempStr += '<option value="' + i + '">' + edLinks[i].display + '</option>';
 	}
 	tempStr += '</select>';
-	document.write(tempStr);
+	return (tempStr);
 }
 
 function edAddTag(which, button) {
@@ -599,9 +599,12 @@ function edSpell(which) {
 }
 
 function edToolbar(which) {
-	document.write('<div id="ed_toolbar_' + which + '" class="ed_toolbar"><span>');
+	var output = '<div id="ed_toolbar_' + which + '" class="ed_toolbar"><span>';
+	
+	
+	//document.write('<div id="ed_toolbar_' + which + '" class="ed_toolbar"><span>');
 	for (i = 0; i < extendedStart; i++) {
-		edShowButton(which, edButtons[i], i);
+		output += edShowButton(which, edButtons[i], i);
 	}
 	/*if (edShowExtraCookie()) {
 		document.write(
@@ -624,11 +627,16 @@ function edToolbar(which) {
 		);
 	}*/
 	for (i = extendedStart; i < edButtons.length; i++) {
-		edShowButton(which, edButtons[i], i);
+		output += edShowButton(which, edButtons[i], i);
 	}
-	document.write('</span>');
-//	edShowLinks();
-	document.write('</div>');
+	output += '</span></div>';
+	
+	
+	$('#' + which).before(output);
+	//output
+	console.log($('#' + which));
+	console.log(output);
+	
     edOpenTags[which] = new Array();
 }
 
@@ -871,3 +879,20 @@ function edShowExtraCookie() {
 	}
 	return false;
 }
+
+
+
+
+
+
+
+// init
+
+$(window).load(function(){
+	$('.InputfieldQuickTagsField').each(function(){
+		edToolbar($(this).attr('id'));	
+	});
+		
+});
+
+

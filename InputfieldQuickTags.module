@@ -15,26 +15,20 @@ class InputfieldQuickTags extends InputfieldTextarea {
      public static function getModuleInfo() {
 	  return array(
 		  'title' => 'QuickTags',
-		  'version' => 100,
+		  'version' => 120,
 		  'summary' => 'Adds a toolbar to a textarea with insertable HTML tags.'
 		  );
      }
 
 	public function ___render() {
-		$this->config->scripts->add($this->config->urls->InputfieldQuickTags.'QuickTags.js');
-		$this->config->styles->add($this->config->urls->InputfieldQuickTags.'QuickTags.css');
-
-		$toolbar = '<script type="text/javascript" charset="utf-8">		
-						edToolbar("'.parent::getAttribute('id').'");		
-					</script>'; 
-		return $toolbar.parent::___render();
+		return parent::___render();
 	}
 
 	public function getAttributes() {
 		$attrs = parent::getAttributes();
 		if(empty($attrs['size'])) {
 			unset($attrs['size']); 
-			$attrs['class'] = (empty($attrs['class']) ? '' : $attrs['class'] . ' ') . 'InputfieldMaxWidth';
+			$attrs['class'] = (empty($attrs['class']) ? '' : $attrs['class'] . ' ') . 'InputfieldMaxWidth InputfieldQuickTagsField';
 		}
 		return $attrs; 
 	}
@@ -50,4 +44,7 @@ class InputfieldQuickTags extends InputfieldTextarea {
 		}
 
 		return parent::setAttribute($key, $value); 
-	}}
+	}
+}
+
+?>
